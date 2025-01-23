@@ -2,85 +2,83 @@ int pagina = 1;
 int[][] bord = new int[3][3]; // 3x3 grid
 int Speler = 1; // 1 voor speler 1 X, 2 voor speler 2 O
 boolean Spelvoorbij = false; // of het spel voorbij is
-String winnaar = ""; // Om de winnaar of gelijkspel te tonen
-
-// Afmetingen van het bord
-int bordX = 200;  
-int bordY = 100;  
-int vakjeGrootte = 120; // Grootte van de vakjes
+String winnaar = ""; // winnaar of gelijkspel
+int bordX = 200;
+int bordY = 100;
+int vakjeGrootte = 120;
 
 void setup() {
-  size(800, 600); 
+  size(800, 600);
   background(255);
 }
 
 void draw() {
   if (pagina == 1) {
-    background(230); 
-    drawRoom();  // Teken de kamer
+    background(230);
+    drawRoom();
   } else if (pagina == 2) {
     background(139, 69, 19);
-    tekenTicTacToe(); // Tic-Tac-Toe
+    tekenTicTacToe();
     drawBack();
   }
 }
 
 void drawRoom() {
-  fill(160); 
+  fill(160);
   strokeWeight(1);
-  rect(0,430,800,600); //vloer
-   
-  fill(173, 216, 230);  
-  rect(320, 190, 160, 150); //raam
-  rect(70, 190, 160, 150); // Raam aan de linkerzijde
-  rect(570, 190, 160, 150); // Raam aan de rechterzijde
-  
-  fill(139, 69, 19);
-  rect(300, 350, 200, 20); // Tafelblad 
+  rect(0, 430, 800, 600); //vloer
 
-  fill(0); 
-  rect(380, 370, 40, 70); 
+  fill(173, 216, 230);
+  rect(320, 190, 160, 150); //raam
+  rect(70, 190, 160, 150); // Raam  linkerzijde
+  rect(570, 190, 160, 150); // Raam  rechterzijde
+
+  fill(139, 69, 19);
+  rect(300, 350, 200, 20); // Tafelblad
+
+  fill(0);
+  rect(380, 370, 40, 70);
   quad(360, 440, 440, 440, 460, 460, 340, 460); // Voetplaat
 
   fill(255, 165, 0); // zitting                    // stoel links
-  rect(200, 390, 80, 20); 
-  rect(200, 350, 20, 40); // Rugleuning 
+  rect(200, 390, 80, 20);
+  rect(200, 350, 20, 40); // Rugleuning
 
-  fill(0);                                            
-  rect(200, 400, 10, 60); 
+  fill(0);
+  rect(200, 400, 10, 60);
   rect(270, 400, 10, 60); // pootjes
-  
-  fill(255, 165, 0); // zitting                  // stoel rechts
-  rect(520, 390, 80, 20); 
-  rect(580, 350, 20, 40); // Rugleuning               
 
-  fill(0); 
-  rect(520, 400, 10, 60); 
+  fill(255, 165, 0); // zitting                  // stoel rechts
+  rect(520, 390, 80, 20);
+  rect(580, 350, 20, 40); // Rugleuning
+
+  fill(0);
+  rect(520, 400, 10, 60);
   rect(590, 400, 10, 60); // pootjes
-  
+
   fill(0);
   textSize(20);
   textAlign(CENTER);
-  text("Click to Start", 400, 320);  
+  text("Click to Start", 400, 320);
 }
 
 void drawBack() {
   fill(0); // knop
-  rect(10, 10, 100, 40); 
+  rect(10, 10, 100, 40);
 
-  fill(255); 
+  fill(255);
   textSize(20);
   textAlign(CENTER, CENTER);
-  text("Back", 60, 30); 
+  text("Back", 60, 30);
 }
 
 void tekenTicTacToe() {
-  fill(0); 
-  text(winnaar, 373, 40); // De tekst in het midden bovenaan
+  fill(0);
+  text(winnaar, 373, 40);
   if (Spelvoorbij) {
-    text("R to restart", 375, 80); // De tekst voor herstarten
+    text("R to restart", 375, 80);
   }
-  
+
   tekenBord();
   controleerWinnaar();
 }
@@ -91,8 +89,8 @@ void mousePressed() {
       pagina = 2; // Verander naar pagina 2
     }
   } else if (pagina == 2) {
-     if (mouseX > 10 && mouseX < 110 && mouseY > 10 && mouseY < 50) {
-      pagina = 1; //terug naar pagina 1 
+    if (mouseX > 10 && mouseX < 110 && mouseY > 10 && mouseY < 50) {
+      pagina = 1; //terug naar pagina 1
     }
     if (Spelvoorbij) {
       return; // Als het spel voorbij is, negeer klikken
@@ -103,17 +101,25 @@ void mousePressed() {
       for (int j = 0; j < 3; j++) {
         // Controleer of de muis binnen de grenzen van de knop is
         if (mouseX > bordX + i * vakjeGrootte && mouseX < bordX + (i + 1) * vakjeGrootte &&
-            mouseY > bordY + j * vakjeGrootte && mouseY < bordY + (j + 1) * vakjeGrootte) {
+          mouseY > bordY + j * vakjeGrootte && mouseY < bordY + (j + 1) * vakjeGrootte) {
           // Als het vakje leeg is, X of O
           if (bord[j][i] == 0) {
             bord[j][i] = Speler;
-            // Wissel van speler
-            Speler = (Speler == 1) ? 2 : 1;
+           wisselSpeler();
           }
         }
       }
     }
   }
+}
+
+void wisselSpeler() {
+  if (Speler == 1) {
+    Speler = 2;
+  } else {
+    Speler = 1;
+  }
+  
 }
 
 void keyPressed() {
@@ -138,12 +144,13 @@ void tekenBord() {
   // Teken de knoppen
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      fill(255); 
+      println(i+":"+j);
+      fill(255);
       stroke(0);
       strokeWeight(4);
       rect(bordX + i * vakjeGrootte, bordY + j * vakjeGrootte, vakjeGrootte, vakjeGrootte);
-      
-      // Teken de X of O als de knop leeg is 
+
+      // Teken de X of O als de knop leeg is
       if (bord[j][i] == 1) {
         tekenX(bordX + i * vakjeGrootte + vakjeGrootte / 2, bordY + j * vakjeGrootte + vakjeGrootte / 2);
       } else if (bord[j][i] == 2) {

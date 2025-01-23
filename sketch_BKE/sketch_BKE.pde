@@ -2,11 +2,9 @@ int[][] bord = new int[3][3]; // 3x3 grid
 int Speler = 1; // 1 voor speler 1 X, 2 voor speler 2 O
 boolean Spelvoorbij = false; // of het spel voorbij is
 String winnaar = ""; // Om de winnaar of gelijkspel te tonen
-
-// Afmetingen van het bord
 int bordX = 200;  
 int bordY = 100;  
-int vakjeGrootte = 120; // Grootte van de vakjes
+int vakjeGrootte = 120; 
 
 void setup() {
   size(800, 600); 
@@ -24,10 +22,9 @@ void setup() {
 void draw() {
   background(255);
   fill(0); 
-  // Toon de tekst bovenaan (winnaar of gelijkspel
-  text(winnaar, 305, 40); // De tekst in het midden bovenaan
+  text(winnaar, 305, 40);
   if (Spelvoorbij) {
-    text("R to restart", 315, 90); // De tekst voor herstarten net onder de winnaarstekst
+    text("R to restart", 315, 90); 
   }
   
   tekenBord();
